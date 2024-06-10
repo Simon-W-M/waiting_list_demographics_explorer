@@ -1,21 +1,22 @@
-# {PROJECT NAME}
-## NHS England South West Intelligence and Insights
+# Waiting List Demographics Explorer
+## NHS England Elective Recovery Insights Cell
 
 ### About the Project
 
 {ADD EXPERIMENTAL STATUS BADGE IF PROJECT IS IN DEVELOPMENT}
 [![status: experimental](https://github.com/GIScience/badges/raw/master/status/experimental.svg)](https://github.com/GIScience/badges#experimental)
 
-This repository holds code for the {PROJECT NAME} {SHORT DESCRIPTION}
+This repository holds code for the Waiting List Explorer Tool
 
 _**Note:** Only public or fake data are shared in this repository._
 
 ### Project Stucture
 
-- The main code is found in the root of the repository (see Usage below for more information)
-- The accompanying [report](./reports/report.pdf) is also available in the `reports` folder
-- More information about the code usage can be found in the [model card](./model_card.md)
-- {OTHER REPO STRUCTURE}
+Code is split into two sections.
+
+One is a pipeline to injest and process the Waiting list minimum dataset (WLMSDS) from UDAL and perform pre processing.
+
+This processed data is then fed into a shiny tool for visualisation.
 
 ### Built With
 
@@ -24,10 +25,13 @@ _**Note:** Only public or fake data are shared in this repository._
 [R Studio](http://www.rstudio.com/.)  
 [R Statistical Software](https://www.R-project.org/.)  
 [SQL SSMS](https://learn.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16)  
-[!Python v3.8](https://www.python.org/downloads/release/python-380/)  
+
 
 - {LIST OF MAIN PACKAGE VERSIONS}
-
+Data processing
+"tidyverse", "odbc",  "DBI", "glue","janitor",   "cluster", "data.table", "mltools", "cli") 
+Shiny tool
+shiny, tidyverse, reactable, reactablefmtr, tippy, shinythemes, shinyalert
 
 ### Getting Started
 
@@ -37,28 +41,38 @@ To get a local copy up and running follow these simple steps.
 
 To clone the repo:
 
-`git clone https://github.com/nhsx/{REPO NAME}`
+`git clone https://github.com/nhengland/waiting_list_demographics_explorer`
 
-{ADDITIONAL TECHNICAL SUPPORT AND NEEDS} 
+
 
 ### Usage
-{DESCRIPTION OF CODE}
-{DESCRIPTION OF PROCESS AND TECHNIQUES UTILISED}
-{METHODOLOGY USED}
+data_injestion_preprossesing runs the injesting and pre processing process
+
+Data is statsicially tested using Fisher's exact test to compare statisical differences between groups of short and long waits.  Long waits are calulated at 52, 72 amd 104 week cohorts.
+Chi square tests are also run in the background to check conformity.
+
+Where there are small groups, these are excluded from the analaysis.
+
+Local ICB level populatons across demographic grousp are also created, this is to benchmark size of lists against other ICBs.
+
+Cluster analsysis using Gower distance is carried out across categorical demographic features
+
+
 
 #### Outputs
-{LIST AND DESCRIPTION OF OUTPUTS}
+app.r
+This is the shiny app that takes the processed data and turns it into an interactive visualisation
 
-{NOTES ON REPRODUCIBILITY OF RESULTS}
+
 
 #### Datasets
-{DESCRIPTION AND LINKS TO DATASETS}
+This utilises the Waiting List Minimum Dataset(WLMDS)
+It also uses a SUS ethnicity table to improve DQ around ethnicity
 
-{LINK TO FAKE DATA TO SUPPORT INITAIL CODE RUNS}
 
 ### Roadmap
 
-See the {LINK TO REPO ISSUES} for a list of proposed features (and known issues).
+Additional analysis around trend is to be introduced.
 
 ### Contributing
 
@@ -88,7 +102,7 @@ of the [Open Government 3.0][ogl] licence.
 
 ### Contact
 
-To find out more about the South West Intelligence and Insights Team visit our [South West Intelligence and Insights Team Futures Page](https://future.nhs.uk/SouthWestAnalytics)) or get in touch at [england.southwestanalytics@nhs.net](mailto:england.southwestanalytics@nhs.net).
+To find out more get in touch at [Simon Wellesley-Miller](mailto:simon.wellesley-miller@nhs.net).
 
 <!-- ### Acknowledgements -->
 
